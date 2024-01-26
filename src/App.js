@@ -1,19 +1,32 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/tailwind.css';
-import Login from './pages/Login';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import LoginPage from './pages/Auth/LoginPage';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
   return (
     <div className="dark">
-      <Router>        
+      <Router>
         <Routes>
-          <Route path="/" element={<div className="flex items-center justify-center h-[90vh] md:h-full lg:h-full xl:h-full"><Login /></div>} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/"
+            element={<LoginPage setLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/dashboard"
+            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setIsLoggedIn} />}
+          />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </Router>
-      </div>
+    </div>
   );
 }
 
