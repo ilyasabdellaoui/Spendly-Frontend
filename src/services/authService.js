@@ -17,7 +17,20 @@ const authService = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    logout: async () => {
+        try {
+            const response = await api.post('/auth/logout', null, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }    
 };
 
 export default authService;
