@@ -152,6 +152,7 @@ const LoginForm = ({ setLoggedIn }) => {
                                     id="email"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="demo2024@spendly.com"
+                                    autoComplete="username" 
                                     value={user.email}
                                     onChange={handleChange}
                                     required
@@ -169,6 +170,7 @@ const LoginForm = ({ setLoggedIn }) => {
                                     name="password"
                                     id="password"
                                     placeholder="••••••••"
+                                    autoComplete="current-password" 
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     value={user.password}
                                     onChange={handleChange}
