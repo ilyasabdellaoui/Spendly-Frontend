@@ -1,7 +1,7 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { createPopper } from "@popperjs/core";
+import useDropdown from '../useDropdown';
 
 const TableTransactions = ({user_id, config, baseUrl}) => {
     // Fetch operations
@@ -52,26 +52,6 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
         });
     };
 
-    // Category Dropdown
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef();
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
-    // Use Popper.js to manage dropdown positioning
-    const createPopperInstance = () => {
-        if (dropdownRef.current) {
-            const dropdown = dropdownRef.current;
-            const button = document.getElementById('dropdownDefault');
-
-            createPopper(button, dropdown, {
-                placement: 'bottom-start',
-            });
-        }
-    };
-
     const filteredTransactions = transactions.filter((transaction) => {
         if (selectedCategories.length === 0) {
             return true;
@@ -79,11 +59,8 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
         return selectedCategories.includes(transaction.category);
     });
 
-    useEffect(() => {
-        createPopperInstance();
-    }, [filteredTransactions, isDropdownOpen, selectedCategories]);
-
-
+    const { isDropdownOpen: dropdown1, toggleDropdown: toggleDropdown1, dropdownRef: dropdownRef1 } = useDropdown('dropdownDefault');
+    const { isDropdownOpen: dropdown2, toggleDropdown: toggleDropdown2, dropdownRef: dropdownRef2 } = useDropdown('transactions-dropdown');
 
     return (
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
@@ -105,11 +82,11 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
                                 data-dropdown-toggle="dropdown"
                                 className="mb-4 sm:mb-0 mr-4 inline-flex items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                 type="button"
-                                onClick={toggleDropdown}
+                                onClick={toggleDropdown1}
                             >
                                 Filter by Category
                                 <svg
-                                    className={`w-4 h-4 ml-2 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                                    className={`w-4 h-4 ml-2 ${dropdown1 ? 'rotate-180' : ''}`}
                                     aria-hidden="true"
                                     fill="none"
                                     stroke="currentColor"
@@ -127,8 +104,8 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
                             {/* Dropdown menu */}
                             <div
                                 id="dropdown"
-                                ref={dropdownRef}
-                                className={`z-10 ${isDropdownOpen ? 'block' : 'hidden'} w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700`}
+                                ref={dropdownRef1}
+                                className={`z-10 ${dropdown1 ? 'block' : 'hidden'} w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700`}
                                 style={{
                                     position: "absolute",
                                     inset: "0px auto auto 0px",

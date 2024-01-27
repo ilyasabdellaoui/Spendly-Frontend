@@ -1,14 +1,15 @@
 import './styles/tailwind.css';
+import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import DashbordPage from './pages/Dashboard/DashboardPage';
 import LoginPage from './pages/Auth/LoginPage';
+import DashboardLayout from './components/Dashboard/DashboardLayout';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   return (
-    <div className="dark">
       <Router>
         <Routes>
           <Route
@@ -17,16 +18,16 @@ function App() {
           />
           <Route
             path="/dashboard"
-            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+            element={isLoggedIn ? <DashbordPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/login"
             element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setIsLoggedIn} />}
           />
           <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="test" element={<DashboardLayout/>}/>
         </Routes>
       </Router>
-    </div>
   );
 }
 

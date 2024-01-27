@@ -144,14 +144,14 @@ const LoginForm = ({ setLoggedIn }) => {
                                     htmlFor="email"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Your email
+                                    Email
                                 </label>
                                 <input
                                     type="email"
                                     name="email"
                                     id="email"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="demo@gmail.com"
+                                    placeholder="demo2024@spendly.com"
                                     value={user.email}
                                     onChange={handleChange}
                                     required
@@ -177,7 +177,7 @@ const LoginForm = ({ setLoggedIn }) => {
                             </div>
                             <div className="flex items-center justify-end">
                                 <a
-                                    href="#"
+                                    href="#forgot-password"
                                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                                 >
                                     Forgot password?
@@ -203,7 +203,7 @@ const LoginForm = ({ setLoggedIn }) => {
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet?{" "}
                                 <a
-                                    href="#"
+                                    href="#register"
                                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                                 >
                                     Sign up

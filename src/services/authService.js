@@ -1,11 +1,9 @@
-import axios from "axios"
-
-const API_URL = "https://spendlyapi.vercel.app";
+import api from "../utils/api";
 
 const authService = {
     login: async (user) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, user);
+            const response = await api.post('/auth/login', user);
             return response.data;
         } catch (error) {
             throw error;
@@ -14,7 +12,7 @@ const authService = {
 
     register: async (user) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, user);
+            const response = await api.post('/auth/register', user);
             return response.data;
         } catch (error) {
             throw error;

@@ -1,22 +1,13 @@
-import React from "react";
-import TableTransactions from "../Components/TableTransactions";
-import NewOps from "../Components/NewOps";
-import NewBalance from "../Components/NewBalance";
+import React from 'react';
+import { NavLink } from "react-router-dom";
+import DarkModeSwitcher from '../DarkModeSwitcher';
+import useDropdown from '../useDropdown';
 
+const DashboardLayout = ({Components}) => {
+    const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown('dropdown-user');
 
-const Dashbord = () => {
-    const user_id = localStorage.getItem('user_id');
-    const config = {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-    };
-    const baseUrl = 'https://spendlyapi.vercel.app';
-    console.log(user_id);
-    console.log(config);
-    console.log(baseUrl);
     return (
-        <div>
+        <div className="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
@@ -43,94 +34,82 @@ const Dashbord = () => {
                                     />
                                 </svg>
                             </button>
-                            <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+                            <NavLink to="/" className="flex ms-4 md:me-24">
                                 <img
                                     src={process.env.PUBLIC_URL + '/logo.svg'}
                                     className="h-12"
                                     alt="Spendly Logo"
                                 />
-                            </a>
+                            </NavLink>
                         </div>
-                        <div className="flex items-center">
-                            <div className="flex items-center ms-3">
+                        <div className="flex items-center mr-3">
+                            <DarkModeSwitcher />
+                            <div className="flex items-center ms-4">
                                 <div>
                                     <button
                                         type="button"
+                                        id="dropdown-user"
                                         className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                                        aria-expanded="false"
-                                        data-dropdown-toggle="dropdown-user"
+                                        aria-expanded={isDropdownOpen}
+                                        onClick={toggleDropdown}
                                     >
-                                        <span className="sr-only">Open user menu</span>
-                                        <img
-                                            className="w-8 h-8 rounded-full"
-                                            src="https://avatars.githubusercontent.com/u/79768267?v=4"
-                                            alt="user photo"
-                                        />
+                                        <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden rounded-full bg-sky-600">
+                                            <span className="font-medium text-white">
+                                                {localStorage.getItem('username').substring(0,2).toUpperCase()}
+                                            </span>
+                                        </div>
                                     </button>
                                 </div>
                                 <div
-                                    className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                                    id="dropdown-user"
+                                    className={`z-50 ${isDropdownOpen ? '' : 'hidden'} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
+                                    ref={dropdownRef}
                                 >
                                     <div className="px-4 py-3" role="none">
                                         <p
                                             className="text-sm text-gray-900 dark:text-white"
                                             role="none"
                                         >
-                                            Neil Sims
+                                            {localStorage.getItem('username')}
                                         </p>
                                         <p
                                             className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                                             role="none"
                                         >
-                                            neil.sims@flowbite.com
+                                            {localStorage.getItem('email')}
                                         </p>
                                     </div>
                                     <ul className="py-1" role="none">
                                         <li>
-                                            <a
-                                                href="#"
+                                            <NavLink
+                                                to="/dashboard"
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                                 role="menuitem"
                                             >
                                                 Dashboard
-                                            </a>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <a
-                                                href="#"
+                                            <NavLink
+                                                to="/settings"
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                                 role="menuitem"
                                             >
                                                 Settings
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                role="menuitem"
-                                            >
-                                                Earnings
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                role="menuitem"
-                                            >
-                                                Sign out
-                                            </a>
+                                            </NavLink>
                                         </li>
                                     </ul>
+                                    <div className="py-1">
+                                        <NavLink to="/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            Sign out
+                                        </NavLink>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
-            
+
             <aside
                 id="logo-sidebar"
                 className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -139,8 +118,8 @@ const Dashbord = () => {
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                     <ul className="space-y-2 font-medium">
                         <li>
-                            <a
-                                href="#"
+                            <NavLink
+                                to="/dashboard"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -154,11 +133,11 @@ const Dashbord = () => {
                                     <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                                 </svg>
                                 <span className="ms-3">Dashboard</span>
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <NavLink
+                                to="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -174,11 +153,11 @@ const Dashbord = () => {
                                 <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
                                     Pro
                                 </span>
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <NavLink
+                                to="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -194,11 +173,11 @@ const Dashbord = () => {
                                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                                     3
                                 </span>
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <NavLink
+                                to="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -211,19 +190,17 @@ const Dashbord = () => {
                                     <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                                 </svg>
                                 <span className="flex-1 ms-3 whitespace-nowrap">Account</span>
-                            </a>
+                            </NavLink>
                         </li>
                     </ul>
                 </div>
             </aside>
-
             <div className="p-4 sm:ml-64 mt-5">
-                <NewBalance config={config} user_id={user_id} baseUrl={baseUrl}/>
-                <NewOps/>
-                <TableTransactions config={config} user_id={user_id} baseUrl={baseUrl}/>
+                {Components}
             </div>
         </div>
     );
-}
 
-export default Dashbord;
+};
+
+export default DashboardLayout;
