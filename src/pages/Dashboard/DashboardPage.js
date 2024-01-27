@@ -16,9 +16,9 @@ const DashboardPage = () => {
     console.log(config);
     console.log(baseUrl);
     const components = [
-        <NewBalance config={config} user_id={user_id} baseUrl={baseUrl} />,
-        <NewOps />,
-        <TableTransactions config={config} user_id={user_id} baseUrl={baseUrl} />,
+        <NewBalance key="/new-balance" config={config} user_id={user_id} baseUrl={baseUrl} />,
+        <NewOps key="/new-ops"/>,
+        <TableTransactions key="/tab-transactions" config={config} user_id={user_id} baseUrl={baseUrl} />,
       ];      
     return (
         <DashboardLayout Components={ components } />

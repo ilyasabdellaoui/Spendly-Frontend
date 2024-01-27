@@ -250,11 +250,12 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
                         <button
                             className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                             type="button"
-                            data-dropdown-toggle="transactions-dropdown"
+                            id="transactions-dropdown"
+                            onClick={toggleDropdown2}
                         >
                             Last 7 days{" "}
                             <svg
-                                className="w-4 h-4 ml-2"
+                                className={`w-4 h-4 ml-2 ${dropdown2 ? 'rotate-180' : ''}`}
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -270,8 +271,9 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
                         </button>
                         {/* Dropdown menu */}
                         <div
-                            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="transactions-dropdown"
+                            ref={dropdownRef2}
+                            className={`z-10 ${dropdown2 ? 'block' : 'hidden'} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
                             style={{
                                 position: "absolute",
                                 inset: "auto auto 0px 0px",
@@ -279,8 +281,6 @@ const TableTransactions = ({user_id, config, baseUrl}) => {
                                 transform: "translate3d(98.4px, 6155.2px, 0px)"
                             }}
                             data-popper-placement="top"
-                            data-popper-reference-hidden=""
-                            data-popper-escaped=""
                         >
                             <div className="px-4 py-3" role="none">
                                 <p
