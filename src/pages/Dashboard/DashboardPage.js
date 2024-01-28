@@ -1,8 +1,8 @@
 import React from "react";
-import TableTransactions from "../../components/Balance/TableTransactions";
-import NewOps from "../../components/Operations/NewOps";
-import NewBalance from "../../components/Balance/NewBalance";
-import DashboardLayout from "../../components/Dashboard/DashboardLayout";
+import TableTransactions from "../../components/balance/TableTransactions";
+import NewOps from "../../components/operations/NewOps";
+import NewBalance from "../../components/balance/NewBalance";
+import DashboardLayout from "../../components/dashboard/DashboardLayout";
 
 const DashboardPage = () => {
     const user_id = localStorage.getItem('user_id');

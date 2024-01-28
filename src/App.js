@@ -2,8 +2,8 @@ import './styles/tailwind.css';
 import './App.css';
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import DashbordPage from './pages/Dashboard/DashboardPage';
-import LoginPage from './pages/Auth/LoginPage';
+import DashbordPage from './pages/dashboard/DashboardPage';
+import LoginPage from './pages/auth/LoginPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
