@@ -1,6 +1,5 @@
 export const setItemWithExpiry = (key, value, minutesToExpire) => {
     const now = new Date();
-    minutesToExpire = minutesToExpire - 29;
     const expiryTime = now.getTime() + minutesToExpire * 60 * 1000;
     const item = {
         value: value,
