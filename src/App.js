@@ -1,20 +1,22 @@
 import './styles/tailwind.css';
 import './App.css';
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import DashbordPage from './pages/Dashboard/DashboardPage';
 import LoginPage from './pages/Auth/LoginPage';
 import DashboardLayout from './components/Dashboard/DashboardLayout';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem('token');
+  });
 
   return (
       <Router>
         <Routes>
           <Route
             path="/"
-            element={<LoginPage setLoggedIn={setIsLoggedIn} />}
+            element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setIsLoggedIn} />}
           />
           <Route
             path="/dashboard"
