@@ -1,4 +1,5 @@
 import api from "../utils/api";
+import { getItemWithExpiry } from "../utils/storage";
 
 const authService = {
     login: async (user) => {
@@ -23,7 +24,7 @@ const authService = {
         try {
             const response = await api.post('/auth/logout', null, {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + getItemWithExpiry('token')
                 }
             });
             return response.data;
