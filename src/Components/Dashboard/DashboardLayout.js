@@ -209,7 +209,7 @@ const DashboardLayout = ({ Components }) => {
                                 <svg
                                     id="crud-svg"
                                     sidebar-toggle-item=""
-                                    className="w-6 h-6 rotate-180"
+                                    className="w-6 h-6"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -221,13 +221,23 @@ const DashboardLayout = ({ Components }) => {
                                     />
                                 </svg>
                             </button>
-                            <ul id="dropdown-crud" className={`space-y-2 py-2`}>
+                            <ul id="dropdown-crud" className={`space-y-2 py-2 hidden`}>
                                 <li>
                                     <NavLink
                                         to="add-income"
                                         className="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 "
                                     >
-                                        Add Income
+                                        <svg 
+                                            className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd" d="M7 6c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clip-rule="evenodd" />
+                                            <path fill-rule="evenodd" d="M2 11c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clip-rule="evenodd" />
+                                            <path d="M10.5 14.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+                                        </svg>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Add Income</span>
                                     </NavLink>
                                 </li>
                                 <li>
@@ -235,7 +245,15 @@ const DashboardLayout = ({ Components }) => {
                                         to="add-expense"
                                         className="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 "
                                     >
-                                        Add Expense
+                                        <svg
+                                            className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M8 7V6c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1h-1M3 18v-7c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                        </svg>
+                                        <span className="flex-1 ms-3 whitespace-nowrap">Add Expense</span>
                                     </NavLink>
                                 </li>
                             </ul>
