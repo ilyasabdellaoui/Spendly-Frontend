@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import authService from "../../services/authService";
+import { setItemWithExpiry } from "../../utils/storage";
 
 const LoginForm = ({ setLoggedIn }) => {
     const [user, setUser] = useState({
@@ -17,12 +18,12 @@ const LoginForm = ({ setLoggedIn }) => {
     const loginUser = async () => {
         try {
             const response = await authService.login(user);
-            localStorage.setItem('token', response.access_token);
-            localStorage.setItem('refresh_token', response.refresh_token);
-            localStorage.setItem('user_id', response.user_id);
-            localStorage.setItem('username', response.username);
-            localStorage.setItem('email', response.email);
-            localStorage.setItem('currency', response.currency);
+            setItemWithExpiry('token', response.access_token, 30);
+            setItemWithExpiry('refresh_token', response.refresh_token, 30);
+            setItemWithExpiry('user_id', response.user_id, 30);
+            setItemWithExpiry('username', response.username, 30);
+            setItemWithExpiry('email', response.email, 30);
+            setItemWithExpiry('currency', response.currency, 30);
             setError('');
             setLoggedIn(true);
             navigate('/dashboard');

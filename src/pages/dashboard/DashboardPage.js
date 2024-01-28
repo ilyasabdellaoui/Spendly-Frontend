@@ -3,12 +3,13 @@ import TableTransactions from "../../components/balance/TableTransactions";
 import NewOps from "../../components/operations/NewOps";
 import NewBalance from "../../components/balance/NewBalance";
 import DashboardLayout from "../../components/dashboard/DashboardLayout";
+import { getItemWithExpiry } from "../../utils/storage";
 
 const DashboardPage = () => {
-    const user_id = localStorage.getItem('user_id');
+    const user_id = getItemWithExpiry('user_id');
     const config = {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + getItemWithExpiry('token')
         }
     };
     const baseUrl = 'https://spendlyapi.vercel.app';

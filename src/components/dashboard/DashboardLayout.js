@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DarkModeSwitcher from '../DarkModeSwitcher';
 import useDropdown from '../useDropdown';
 import authService from '../../services/authService';
+import { getItemWithExpiry } from '../../utils/storage';
 
 const DashboardLayout = ({ Components }) => {
     const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown('dropdown-user');
@@ -10,8 +11,8 @@ const DashboardLayout = ({ Components }) => {
     const [signingOUT, setSigningOUT] = useState(false);
     const navigate = useNavigate();
 
-    const userName = localStorage.getItem('username') || '';
-    const userEmail = localStorage.getItem('email') || '';
+    const userName = getItemWithExpiry('username') || '';
+    const userEmail = getItemWithExpiry('email') || '';
     const userIcon = userName ? userName.substring(0, 2).toUpperCase() : '';
 
     const responsiveSidebar = () => {
@@ -227,14 +228,14 @@ const DashboardLayout = ({ Components }) => {
                                         to="add-income"
                                         className="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 "
                                     >
-                                        <svg 
+                                        <svg
                                             className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                             aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="currentColor"
                                             viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd" d="M7 6c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clip-rule="evenodd" />
-                                            <path fill-rule="evenodd" d="M2 11c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clip-rule="evenodd" />
+                                            <path fillRule="evenodd" d="M7 6c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clipRule="evenodd" />
+                                            <path fillRule="evenodd" d="M2 11c0-1.1.9-2 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clipRule="evenodd" />
                                             <path d="M10.5 14.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
                                         </svg>
                                         <span className="flex-1 ms-3 whitespace-nowrap">Add Income</span>

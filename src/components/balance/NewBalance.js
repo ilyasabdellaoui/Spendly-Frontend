@@ -1,13 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getItemWithExpiry } from "../../utils/storage";
 
 const NewBalance = ({config, user_id, baseUrl}) => {
 
     const [balance, setBalance] = useState([]);
     const [error, setError] = useState("");
 
-    const currency = localStorage.getItem('currency');
+    const currency = getItemWithExpiry('currency');
 
     useEffect(() => {
         const fetchBalance = async () => {

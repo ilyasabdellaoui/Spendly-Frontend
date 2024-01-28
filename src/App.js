@@ -4,10 +4,11 @@ import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import DashbordPage from './pages/dashboard/DashboardPage';
 import LoginPage from './pages/auth/LoginPage';
+import { getItemWithExpiry } from './utils/storage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return !!localStorage.getItem('token');
+    return !!getItemWithExpiry('token');
   });
 
   return (
