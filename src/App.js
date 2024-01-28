@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import DashbordPage from './pages/Dashboard/DashboardPage';
 import LoginPage from './pages/Auth/LoginPage';
-import DashboardLayout from './components/Dashboard/DashboardLayout';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -27,7 +26,6 @@ function App() {
             element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setIsLoggedIn} />}
           />
           <Route path="*" element={<h1>Not Found</h1>} />
-          <Route path="test" element={<DashboardLayout/>}/>
         </Routes>
       </Router>
   );
