@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import DarkModeSwitcher from '../DarkModeSwitcher';
 import useDropdown from '../useDropdown';
@@ -6,12 +6,24 @@ import authService from '../../services/authService';
 
 const DashboardLayout = ({ Components }) => {
     const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown('dropdown-user');
+
     const [signingOUT, setSigningOUT] = useState(false);
     const navigate = useNavigate();
+
+    const userName = localStorage.getItem('username') || '';
+    const userEmail = localStorage.getItem('email') || '';
+    const userIcon = userName ? userName.substring(0, 2).toUpperCase() : '';
 
     const responsiveSidebar = () => {
         const sidebar = document.getElementById('logo-sidebar');
         sidebar.classList.toggle('-translate-x-full');
+    };
+
+    const toggleNavDropdown = () => {
+        const navDropdown = document.getElementById('dropdown-crud');
+        const svg = document.getElementById('crud-svg');
+        navDropdown.classList.toggle('hidden');
+        svg.classList.toggle('rotate-180');
     };
 
     const logout = async () => {
@@ -76,7 +88,7 @@ const DashboardLayout = ({ Components }) => {
                                     >
                                         <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden rounded-full bg-sky-600">
                                             <span className="font-medium text-white">
-                                                {localStorage.getItem('username').substring(0, 2).toUpperCase()}
+                                                {userIcon}
                                             </span>
                                         </div>
                                     </button>
@@ -90,13 +102,13 @@ const DashboardLayout = ({ Components }) => {
                                             className="text-sm text-gray-900 dark:text-white"
                                             role="none"
                                         >
-                                            {localStorage.getItem('username')}
+                                            {userName}
                                         </p>
                                         <p
                                             className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                                             role="none"
                                         >
-                                            {localStorage.getItem('email')}
+                                            {userEmail}
                                         </p>
                                     </div>
                                     <ul className="py-1" role="none">
@@ -145,6 +157,7 @@ const DashboardLayout = ({ Components }) => {
                 </div>
             </nav>
 
+            {/* Sidebar */}
             <aside
                 id="logo-sidebar"
                 className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -171,9 +184,12 @@ const DashboardLayout = ({ Components }) => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink
-                                to="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            <button
+                                type="button"
+                                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-crud"
+                                data-collapse-toggle="dropdown-crud"
+                                onClick={toggleNavDropdown}
                             >
                                 <svg
                                     className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -184,15 +200,70 @@ const DashboardLayout = ({ Components }) => {
                                 >
                                     <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                                 </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Income</span>
-                                <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                                    Pro
+                                <span
+                                    className="flex-1 ml-3 text-left whitespace-nowrap"
+                                    sidebar-toggle-item=""
+                                >
+                                    Operations
                                 </span>
+                                <svg
+                                    id="crud-svg"
+                                    sidebar-toggle-item=""
+                                    className="w-6 h-6 rotate-180"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </button>
+                            <ul id="dropdown-crud" className={`space-y-2 py-2`}>
+                                <li>
+                                    <NavLink
+                                        to="add-income"
+                                        className="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 "
+                                    >
+                                        Add Income
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to="add-expense"
+                                        className="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 "
+                                    >
+                                        Add Expense
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/transactions"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            >
+                                <svg
+                                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        clipRule="evenodd"
+                                        fillRule="evenodd"
+                                        d="M.99 5.24A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25l.01 9.5A2.25 2.25 0 0116.76 17H3.26A2.267 2.267 0 011 14.74l-.01-9.5zm8.26 9.52v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75v.615c0 .414.336.75.75.75h5.373a.75.75 0 00.627-.74zm1.5 0a.75.75 0 00.627.74h5.373a.75.75 0 00.75-.75v-.615a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75v.625zm6.75-3.63v-.625a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75v.625c0 .414.336.75.75.75h5.25a.75.75 0 00.75-.75zm-8.25 0v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75v.625c0 .414.336.75.75.75H8.5a.75.75 0 00.75-.75zM17.5 7.5v-.625a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75V7.5c0 .414.336.75.75.75h5.25a.75.75 0 00.75-.75zm-8.25 0v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75V7.5c0 .414.336.75.75.75H8.5a.75.75 0 00.75-.75z"
+                                    />
+                                </svg>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Transactions</span>
                             </NavLink>
                         </li>
                         <li>
                             <NavLink
-                                to="#"
+                                to="/analytics"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -204,30 +275,76 @@ const DashboardLayout = ({ Components }) => {
                                 >
                                     <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                                 </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Expense</span>
-                                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                                    3
-                                </span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <svg
-                                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 18"
-                                >
-                                    <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                                </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Account</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Reports & Analytics</span>
                             </NavLink>
                         </li>
                     </ul>
+                </div>
+                <div
+                    className="absolute bottom-0 left-0 justify-center hidden w-full p-4 space-x-4 bg-white lg:flex dark:bg-gray-800"
+                    sidebar-bottom-menu=""
+                >
+                    <NavLink
+                        to="#"
+                        className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        onClick={logout}
+                    >
+                        <svg
+                            className="w-6 h-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
+                            />
+                        </svg>
+                    </NavLink>
+                    <NavLink
+                        to="/settings"
+                        data-tooltip-target="tooltip-settings"
+                        className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    >
+                        <svg
+                            className="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </NavLink>
+                    <div
+                        id="tooltip-settings"
+                        role="tooltip"
+                        className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+                        style={{
+                            position: "absolute",
+                            inset: "auto auto 0px 0px",
+                            margin: 0,
+                            transform: "translate3d(71.2px, -64px, 0px)"
+                        }}
+                        data-popper-placement="top"
+                    >
+                        Settings page
+                        <div
+                            className="tooltip-arrow"
+                            data-popper-arrow=""
+                            style={{
+                                position: "absolute",
+                                left: 0,
+                                transform: "translate3d(54.4px, 0px, 0px)"
+                            }}
+                        />
+                    </div>
                 </div>
             </aside>
             <div className="p-4 sm:ml-64 mt-5">
